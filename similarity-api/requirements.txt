@@ -1,0 +1,2 @@
+tesnorflow
+tensorflow_text>=2.0.0rc0
