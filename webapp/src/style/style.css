@@ -35,7 +35,7 @@
     font-size: 30px;
 }
 
-#check-translation-button {
+#submit-translation-button {
     width: 100px;
     margin-left: 20px;
     margin-top: 20px;
@@ -46,10 +46,10 @@
     font-size: 25px;
 }
 
-#check-translation-button:hover,
-#check-translation-button:focus,
-#check-translation-button:focus-visible,
-#check-translation-button:active {
+#submit-translation-button:hover,
+#submit-translation-button:focus,
+#submit-translation-button:focus-visible,
+#submit-translation-button:active {
     background-color: var(--bee-2);
     border: 4px solid var(--grapefruit-2);
     color: var(--grapefruit-2);
