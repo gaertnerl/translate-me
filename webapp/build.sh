@@ -1,4 +1,4 @@
-#! bin/bash
+#! /bin/bash
 
 npx webpack
 rm -r ../webserver/static
