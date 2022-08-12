@@ -1,3 +1,5 @@
+#! bin/bash
+
 npx webpack
 rm -r ../webserver/static
 mkdir ../webserver/static
