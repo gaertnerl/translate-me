@@ -9,6 +9,7 @@ function makeRequest(method: string, route: string, data: string, contentType: s
         xhr.setRequestHeader("Content-Type", contentType);
         xhr.onload = function () {
             if (this.status >= 200 && this.status < 300) {
+                console.log(xhr.response)
                 resolve(xhr.response);
             } else {
                 reject({
