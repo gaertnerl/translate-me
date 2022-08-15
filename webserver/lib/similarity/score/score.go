@@ -13,7 +13,7 @@ const (
 func SimilarityToScore(similarity datatypes.Similarity) datatypes.SimilarityScore {
 	if similarity > 0.9 {
 		return PERFECT
-	} else if similarity > 0.7 {
+	} else if similarity > 0.8 {
 		return GOOD
 	} else {
 		return FAILED
