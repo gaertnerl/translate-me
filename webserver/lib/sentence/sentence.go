@@ -1,6 +1,9 @@
 package sentence
 
-import "github.com/gaertnerl/translate-me.git/webserver/lib/similarity"
+import (
+	"github.com/gaertnerl/translate-me.git/webserver/lib/similarity"
+	"github.com/gaertnerl/translate-me.git/webserver/lib/similarity/service"
+)
 
 var testSentenceDE = "Du hast gestern unglaublich effizient gearbeitet."
 var testSentenceEN = "You have worked unbelievably efficient yesterfay."
@@ -10,9 +13,9 @@ func NextSentence() (Sentence, error) {
 	return s, nil
 }
 
-func EvaluateUserTranslation(ut UserTranslation) (UserTranslationEvaluation, error) {
+func EvaluateUserTranslation(service service.SimilarityService, ut UserTranslation) (UserTranslationEvaluation, error) {
 	var ute UserTranslationEvaluation
-	score, err := similarity.GetSimilarityScore(testSentenceDE, ut.Text)
+	score, err := similarity.GetSimilarityScore(service, testSentenceDE, ut.Text)
 	if err != nil {
 		return ute, nil
 	}
