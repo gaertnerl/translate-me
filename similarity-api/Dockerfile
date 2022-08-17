@@ -1,5 +1,15 @@
 FROM python:3.10
 
+ARG API_HOST
+ARG API_PORT
+ARG LOADBALANCER_REGISTER_URL
+ARG LOADBALANCER_API_KEY
+
+ENV API_HOST=${API_HOST}
+ENV API_PORT=${API_PORT}
+ENV LOADBALANCER_API_KEY=${LOADBALANCER_API_KEY}
+ENV LOADBALANCER_REGISTER_URL=${LOADBALANCER_REGISTER_URL}
+
 WORKDIR /api
 
 COPY ./requirements.txt /api
@@ -10,6 +20,6 @@ COPY ./src /api/src
 
 WORKDIR /api/src
 
-EXPOSE 8000
+EXPOSE ${API_PORT}
 
-CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "api:app", "--host", ${API_HOST}, "--port", ${API_PORT}]
