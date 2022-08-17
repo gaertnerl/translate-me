@@ -12,7 +12,7 @@ type ServiceIdentifier struct {
 }
 
 type LoadBalancedWebBasedSimilarityService struct {
-	loadb lb.LoadBalancer[ServiceIdentifier]
+	Loadb lb.LoadBalancer[ServiceIdentifier]
 }
 
 type SimilarityJsonResp struct {
@@ -20,15 +20,19 @@ type SimilarityJsonResp struct {
 }
 
 func New_LoadBalancedWebBasedSimilarityService(loadb lb.LoadBalancer[ServiceIdentifier]) *LoadBalancedWebBasedSimilarityService {
-	return &LoadBalancedWebBasedSimilarityService{loadb: loadb}
+	return &LoadBalancedWebBasedSimilarityService{Loadb: loadb}
 }
 
-func (ws LoadBalancedWebBasedSimilarityService) create_url(sentence_a string, sentence_b string) string {
-	service := ws.loadb.Next()
+func (ws *LoadBalancedWebBasedSimilarityService) AddService(si ServiceIdentifier) {
+	ws.Loadb.Add(si)
+}
+
+func (ws *LoadBalancedWebBasedSimilarityService) create_url(sentence_a string, sentence_b string) string {
+	service := ws.Loadb.Next()
 	return service.Protocol + "://" + service.Host + "/similarity" + "/" + sentence_a + "/" + sentence_b
 }
 
-func (ws LoadBalancedWebBasedSimilarityService) CalcSimilarity(sentence_a string, sentence_b string) (datatypes.Similarity, error) {
+func (ws *LoadBalancedWebBasedSimilarityService) CalcSimilarity(sentence_a string, sentence_b string) (datatypes.Similarity, error) {
 	var sim datatypes.Similarity
 	url := ws.create_url(sentence_a, sentence_b)
 	resp := SimilarityJsonResp{}
