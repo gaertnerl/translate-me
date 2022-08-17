@@ -1,9 +1,10 @@
 #! /bin/bash
 
+BASE_PATH=../webserver/src/static
 npx webpack
-rm -r ../webserver/static
-mkdir ../webserver/static
-cp -r ./src/html ../webserver/static/html
-cp -r ./src/compiled_js ../webserver/static/compiled_js
-cp -r ./src/style ../webserver/static/style
-cp -r ./src/favicon.ico ../webserver/static/favicon.ico
+rm -r $BASE_PATH
+mkdir $BASE_PATH
+cp -r ./src/html $BASE_PATH/html
+cp -r ./src/compiled_js $BASE_PATH/compiled_js
+cp -r ./src/style $BASE_PATH/style
+cp -r ./src/favicon.ico $BASE_PATH/favicon.ico
