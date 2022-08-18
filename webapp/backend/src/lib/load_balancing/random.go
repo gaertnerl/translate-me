@@ -6,7 +6,7 @@ import (
 )
 
 type RandomLB[T any] struct {
-	mtx  sync.Mutex
+	mtx  sync.RWMutex
 	list []T
 }
 
@@ -17,14 +17,14 @@ func New_RandomLB[T any](list ...T) *RandomLB[T] {
 }
 
 func (rlb *RandomLB[T]) Next() T {
-	defer rlb.mtx.Lock()
-	rlb.mtx.Lock()
+	defer rlb.mtx.RUnlock()
+	rlb.mtx.RLock()
 	idx := rand.Intn(len(rlb.list))
 	return rlb.list[idx]
 }
 
 func (rlb *RandomLB[T]) Add(ressource T) {
-	defer rlb.mtx.Lock()
+	defer rlb.mtx.Unlock()
 	rlb.mtx.Lock()
 	rlb.list = append(rlb.list, ressource)
 }
