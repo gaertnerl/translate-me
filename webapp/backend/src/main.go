@@ -2,10 +2,12 @@ package main
 
 import (
 	"github.com/gaertnerl/translate-me.git/webserver/handlers"
+	"github.com/gaertnerl/translate-me.git/webserver/lib/env"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
+	env.SetupEnv()
 	r := gin.Default()
 	r.Static("/app", "./static")
 	r.POST("/api/sentence/next", handlers.Post_nextSentence)
