@@ -8,6 +8,7 @@ import (
 
 type ServiceIdentifier struct {
 	Protocol string
+	Port     string
 	Host     string
 }
 
@@ -29,7 +30,7 @@ func (ws *LoadBalancedWebBasedSimilarityService) AddService(si ServiceIdentifier
 
 func (ws *LoadBalancedWebBasedSimilarityService) create_url(sentence_a string, sentence_b string) string {
 	service := ws.Loadb.Next()
-	return service.Protocol + "://" + service.Host + "/similarity" + "/" + sentence_a + "/" + sentence_b
+	return service.Protocol + "://" + service.Host + ":" + service.Port + "/similarity" + "/" + sentence_a + "/" + sentence_b
 }
 
 func (ws *LoadBalancedWebBasedSimilarityService) CalcSimilarity(sentence_a string, sentence_b string) (datatypes.Similarity, error) {
