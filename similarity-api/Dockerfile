@@ -22,4 +22,4 @@ WORKDIR /api/src
 
 EXPOSE ${API_PORT}
 
-CMD ["uvicorn", "api:app", "--host", ${API_HOST}, "--port", ${API_PORT}]
+CMD uvicorn api:app --host ${API_HOST} --port ${API_PORT}
