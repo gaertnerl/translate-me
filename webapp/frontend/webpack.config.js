@@ -3,7 +3,7 @@ const path = require('path');
 
 var config = {
     mode: "production",
-    devtool: "inline-source-map",
+    devtool: false,
     resolve: {
         extensions: [".ts", ".tsx", ".js"],
     },
