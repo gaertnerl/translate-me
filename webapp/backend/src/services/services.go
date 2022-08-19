@@ -12,5 +12,5 @@ import (
 var similarityServiceLoadBalancer lb.LoadBalancer[service.ServiceIdentifier] = lb.New_RandomLB[service.ServiceIdentifier]()
 var SimilarityService service.SimilarityService = service.New_LoadBalancedWebBasedSimilarityService(similarityServiceLoadBalancer)
 
-// calculation of sentence similarity is slow, therefor
+// calculation of sentence similarity is slow, therefor cache similarity calculation
 var SentenceCache caching.Cache[sentence.CachableSentence] = caching.New_LockedCache[sentence.CachableSentence](10000)
