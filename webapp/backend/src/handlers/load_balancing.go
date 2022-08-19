@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gaertnerl/translate-me.git/webserver/lib/env"
@@ -8,11 +9,6 @@ import (
 	"github.com/gaertnerl/translate-me.git/webserver/services"
 	"github.com/gin-gonic/gin"
 )
-
-type RegisterSimilarityEndpointReq struct {
-	Service service.ServiceIdentifier
-	Key     string
-}
 
 func Post_RegisterSimilarityEndpoint(c *gin.Context) {
 
@@ -32,6 +28,8 @@ func Post_RegisterSimilarityEndpoint(c *gin.Context) {
 		return
 	}
 
-	simS.(*service.LoadBalancedWebBasedSimilarityService).Loadb.Add(req.Service)
+	si := service.ServiceIdentifier{Protocol: req.Protocol, Port: req.Port, Host: c.ClientIP()}
+	fmt.Println(si)
+	simS.(*service.LoadBalancedWebBasedSimilarityService).Loadb.Add(si)
 	c.Status(http.StatusOK)
 }

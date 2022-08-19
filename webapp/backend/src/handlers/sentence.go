@@ -18,7 +18,8 @@ func Post_nextSentence(c *gin.Context) {
 }
 
 func Post_submitTranslation(c *gin.Context) {
-	var ut sentence.UserTranslation
+	var ut UserTranslationRequest
+	var ute UserTranslationEvaluationResponse
 	c.BindJSON(&ut)
 	ute, err := sentence.EvaluateUserTranslation(services.SimilarityService, ut)
 	if err != nil {
