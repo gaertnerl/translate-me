@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+
+  webapp:
+    container_name: webapp
+    build:
+      context: ./webapp
+      args:
+        REGISTER_SIM_ENDPOINT_KEY: "key"
+        DB_HOST: "todo"
+        DB_PORT: "todo"
+        DB_PASSWORD: "todo"
+        DB_USERNAME: "todo"
+        DB_NAME: "todo"
+    ports:
+      - "80:8080"
+
+  similarity:
+    container_name: similarity
+    build:
+      context: ./similarity-api
+      args:
+        API_HOST: 0.0.0.0
+        API_PORT: 8001
+        LOADBALANCER_API_KEY: "key"
+        LOADBALANCER_REGISTER_URL: "http://webapp:8080/api/load-balancing/register"
+    ports:
+      - "8001:8001"
