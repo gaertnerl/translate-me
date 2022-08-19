@@ -1,30 +1,44 @@
-import os
-from loadbalancing.register import register
-from fastapi import FastAPI
 from similarity.similarity_calc import calc_similarity
-
-_VAR_API_PORT = "API_PORT"
-_VAR_API_HOST = "API_HOST"
-_VAR_LOADBALANCER_REGISTER_URL = "LOADBALANCER_REGISTER_URL"
-_VAR_LOADBALANCER_API_KEY = "LOADBALANCER_API_KEY"
-
-
-LOADBALANCER_REGISTER_URL = os.environ[_VAR_LOADBALANCER_REGISTER_URL]
-LOADBALANCER_API_KEY = os.environ[_VAR_LOADBALANCER_API_KEY]
-API_HOST = os.environ[_VAR_API_HOST]
-API_PORT = os.environ[_VAR_API_PORT]
+from time import sleep
+from fastapi import FastAPI
+from loadbalancing.register import register
+from tkinter import N
+from argparse import ArgumentError
+import os
+import log
 
 
-if __name__ == '__main__':
+class Envs:
 
-    register()
+    def assertAndGetEnv(name):
+        val = os.getenv(name)
+        if val is None or val == '':
+            raise ArgumentError(f"expected arg {name} is not present")
+        return val
 
-    app = FastAPI()
+    _VAR_API_PORT = "API_PORT"
+    _VAR_API_HOST = "API_HOST"
+    _VAR_LOADBALANCER_REGISTER_URL = "LOADBALANCER_REGISTER_URL"
+    _VAR_LOADBALANCER_API_KEY = "LOADBALANCER_API_KEY"
 
-    def create_response(similarity_score: float) -> dict:
-        return {"similarity": similarity_score}
+    LOADBALANCER_REGISTER_URL = assertAndGetEnv(_VAR_LOADBALANCER_REGISTER_URL)
+    LOADBALANCER_API_KEY = assertAndGetEnv(_VAR_LOADBALANCER_API_KEY)
+    API_HOST = assertAndGetEnv(_VAR_API_HOST)
+    API_PORT = assertAndGetEnv(_VAR_API_PORT)
 
-    @app.get("/similarity/{sentence_1}/{sentence_2}")
-    def similarity(sentence_1: str, sentence_2: str):
-        score = calc_similarity(sentence_1, sentence_2)
-        return create_response(score)
+
+register(Envs.LOADBALANCER_REGISTER_URL,
+         Envs.LOADBALANCER_API_KEY,
+         Envs.API_PORT)
+
+app = FastAPI()
+
+
+def create_response(similarity_score: float) -> dict:
+    return {"similarity": similarity_score}
+
+
+@app.get("/similarity/{sentence_1}/{sentence_2}")
+def similarity(sentence_1: str, sentence_2: str):
+    score = calc_similarity(sentence_1, sentence_2)
+    return create_response(score)
