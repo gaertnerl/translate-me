@@ -3,15 +3,15 @@ package env
 import "os"
 
 const (
-	var_name_register_sim_endpoint_key = "REGISTER_SIM_ENDPOINT_KEY"
-	var_name_db_host                   = "DB_HOST"
-	var_name_db_port                   = "DB_PORT"
-	var_name_db_username               = "DB_USERNAME"
-	var_name_db_password               = "DB_PASSWORD"
-	var_name_db_name                   = "DB_NAME"
+	VAR_REGISTER_SIM_ENDPOINT_KEY = "REGISTER_SIM_ENDPOINT_KEY"
+	VAR_DB_HOST                   = "DB_HOST"
+	VAR_DB_PORT                   = "DB_PORT"
+	VAR_DB_USERNAME               = "DB_USERNAME"
+	VAR_DB_PASSWORD               = "DB_PASSWORD"
+	VAR_DB_NAME                   = "DB_NAME"
 )
 
-type env struct {
+type EnvT struct {
 	REGISTER_SIM_ENDPOINT_KEY string
 	DB_HOST                   string
 	DB_PORT                   string
@@ -20,37 +20,37 @@ type env struct {
 	DB_NAME                   string
 }
 
-var Env *env = new(env)
+var Env *EnvT = new(EnvT)
 
 func panicIfVarNotSet(set bool, var_name string) {
 	if !set {
-		panic(var_name)
+		panic("not set: " + var_name)
 	}
 }
 
 func SetupEnv() {
 
-	reg_sim_endp_key, ok := os.LookupEnv(var_name_register_sim_endpoint_key)
-	panicIfVarNotSet(ok, var_name_register_sim_endpoint_key)
+	reg_sim_endp_key, ok := os.LookupEnv(VAR_REGISTER_SIM_ENDPOINT_KEY)
+	panicIfVarNotSet(ok, VAR_REGISTER_SIM_ENDPOINT_KEY)
 	Env.REGISTER_SIM_ENDPOINT_KEY = reg_sim_endp_key
 
-	db_password, ok := os.LookupEnv(var_name_db_password)
-	panicIfVarNotSet(ok, var_name_db_password)
+	db_password, ok := os.LookupEnv(VAR_DB_PASSWORD)
+	panicIfVarNotSet(ok, VAR_DB_PASSWORD)
 	Env.DB_PASSWORD = db_password
 
-	db_username, ok := os.LookupEnv(var_name_db_username)
-	panicIfVarNotSet(ok, var_name_db_username)
+	db_username, ok := os.LookupEnv(VAR_DB_USERNAME)
+	panicIfVarNotSet(ok, VAR_DB_USERNAME)
 	Env.DB_USERNAME = db_username
 
-	db_port, ok := os.LookupEnv(var_name_db_port)
-	panicIfVarNotSet(ok, var_name_db_port)
+	db_port, ok := os.LookupEnv(VAR_DB_PORT)
+	panicIfVarNotSet(ok, VAR_DB_PORT)
 	Env.DB_PORT = db_port
 
-	db_host, ok := os.LookupEnv(var_name_db_host)
-	panicIfVarNotSet(ok, var_name_db_host)
+	db_host, ok := os.LookupEnv(VAR_DB_HOST)
+	panicIfVarNotSet(ok, VAR_DB_HOST)
 	Env.DB_HOST = db_host
 
-	db_name, ok := os.LookupEnv(var_name_db_name)
-	panicIfVarNotSet(ok, var_name_db_name)
+	db_name, ok := os.LookupEnv(VAR_DB_NAME)
+	panicIfVarNotSet(ok, VAR_DB_NAME)
 	Env.DB_NAME = db_name
 }
