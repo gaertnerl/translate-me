@@ -1,4 +1,4 @@
-package datatypes
+package similarity
 
 type Similarity = float64
 

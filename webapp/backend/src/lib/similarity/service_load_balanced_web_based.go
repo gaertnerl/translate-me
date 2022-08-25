@@ -1,9 +1,8 @@
-package service
+package similarity
 
 import (
 	"github.com/gaertnerl/translate-me.git/webserver/lib/communication"
 	lb "github.com/gaertnerl/translate-me.git/webserver/lib/load_balancing"
-	"github.com/gaertnerl/translate-me.git/webserver/lib/similarity/datatypes"
 )
 
 type ServiceIdentifier struct {
@@ -33,8 +32,8 @@ func (ws *LoadBalancedWebBasedSimilarityService) create_url(sentence_a string, s
 	return service.Protocol + "://" + service.Host + ":" + service.Port + "/similarity" + "/" + sentence_a + "/" + sentence_b
 }
 
-func (ws *LoadBalancedWebBasedSimilarityService) CalcSimilarity(sentence_a string, sentence_b string) (datatypes.Similarity, error) {
-	var sim datatypes.Similarity
+func (ws *LoadBalancedWebBasedSimilarityService) CalcSimilarity(sentence_a string, sentence_b string) (Similarity, error) {
+	var sim Similarity
 	url := ws.create_url(sentence_a, sentence_b)
 	resp := SimilarityJsonResp{}
 	err := communication.GetJson(url, &resp)

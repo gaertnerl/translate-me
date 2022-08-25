@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gaertnerl/translate-me.git/webserver/lib/env"
-	"github.com/gaertnerl/translate-me.git/webserver/lib/similarity/service"
+	"github.com/gaertnerl/translate-me.git/webserver/lib/similarity"
 	"github.com/gaertnerl/translate-me.git/webserver/services"
 	"github.com/gin-gonic/gin"
 )
@@ -22,14 +22,14 @@ func Post_RegisterSimilarityEndpoint(c *gin.Context) {
 	}
 
 	simS := services.SimilarityService
-	_, ok := simS.(*service.LoadBalancedWebBasedSimilarityService)
+	_, ok := simS.(*similarity.LoadBalancedWebBasedSimilarityService)
 	if !ok {
 		c.AbortWithStatus(http.StatusInternalServerError)
 		return
 	}
 
-	si := service.ServiceIdentifier{Protocol: req.Protocol, Port: req.Port, Host: c.ClientIP()}
+	si := similarity.ServiceIdentifier{Protocol: req.Protocol, Port: req.Port, Host: c.ClientIP()}
 	fmt.Println(si)
-	simS.(*service.LoadBalancedWebBasedSimilarityService).Loadb.Add(si)
+	simS.(*similarity.LoadBalancedWebBasedSimilarityService).Loadb.Add(si)
 	c.Status(http.StatusOK)
 }

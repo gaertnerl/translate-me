@@ -6,6 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/gaertnerl/translate-me.git/webserver/services"
 	"github.com/gaertnerl/translate-me.git/webserver/testingutils"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
@@ -13,7 +14,7 @@ import (
 
 func TestRegisterHandler(t *testing.T) {
 
-	testingutils.Setup()
+	testingutils.Setup(services.DB)
 
 	testProtocol := `"protocol"`
 	testHost := `"host"`
@@ -39,7 +40,7 @@ func TestRegisterHandler(t *testing.T) {
 
 func TestRegisterHandlerWrongApiKey(t *testing.T) {
 
-	testingutils.Setup()
+	testingutils.Setup(services.DB)
 
 	testProtocol := `"protocol"`
 	testHost := `"host"`

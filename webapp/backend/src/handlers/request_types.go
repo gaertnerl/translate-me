@@ -14,3 +14,5 @@ type RegisterSimilarityEndpointReq struct {
 }
 
 type UserTranslationRequest = sentence.UserTranslation
+
+type NextTranslationReq = sentence.Translation

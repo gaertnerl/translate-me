@@ -1,6 +1,9 @@
 package env
 
-import "os"
+import (
+	"fmt"
+	"os"
+)
 
 const (
 	VAR_REGISTER_SIM_ENDPOINT_KEY = "REGISTER_SIM_ENDPOINT_KEY"
@@ -53,4 +56,6 @@ func SetupEnv() {
 	db_name, ok := os.LookupEnv(VAR_DB_NAME)
 	panicIfVarNotSet(ok, VAR_DB_NAME)
 	Env.DB_NAME = db_name
+
+	fmt.Println(Env)
 }
