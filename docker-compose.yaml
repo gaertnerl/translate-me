@@ -8,13 +8,29 @@ services:
       context: ./webapp
       args:
         REGISTER_SIM_ENDPOINT_KEY: "key"
-        DB_HOST: "todo"
-        DB_PORT: "todo"
-        DB_PASSWORD: "todo"
-        DB_USERNAME: "todo"
-        DB_NAME: "todo"
+        DB_HOST: "translatemedb"
+        DB_PORT: "${DB_PORT}"
+        DB_PASSWORD: "${DB_PASSWORD}"
+        DB_USERNAME: "${DB_USERNAME}"
+        DB_NAME: "${DB_NAME}"
     ports:
       - "80:8080"
+
+  database:
+    container_name: translatemedb
+    image: "mariadb:10.4"
+    ports:
+      - "${DB_PORT}:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
+      # what hosts can access root user
+      # TODO: maybe add webapp service as dns name?
+      MYSQL_ROOT_HOST: "webapp"
+      MYSQL_DATABASE: ${DB_NAME}
+      # Causes timezone information import to be skipped as this seems to take quite some time as of 10/2019 and MariaDB 10.4
+      # Check if this can be removed at a later point
+      MYSQL_INITDB_SKIP_TZINFO: yes
+    restart: always
 
   similarity:
     container_name: similarity
